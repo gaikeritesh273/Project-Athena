@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     UPSTASH_REDIS_REST_TOKEN: str = ""
     NEWSAPI_KEY: str = ""
     GNEWS_KEY: str = ""
+    GEMINI_API_KEY: str = ""
     JWT_SECRET: str = "change-me-in-production"
     CORS_ORIGINS: str = "http://localhost:3000"
 
@@ -30,6 +31,14 @@ class Settings(BaseSettings):
     def has_gnews(self) -> bool:
         """Returns True only if GNEWS_KEY is set and is not a placeholder."""
         key = self.GNEWS_KEY.strip().lower()
+        if not key:
+            return False
+        return not any(key.startswith(p) for p in _PLACEHOLDER_PREFIXES)
+
+    @property
+    def has_gemini(self) -> bool:
+        """Returns True only if GEMINI_API_KEY is set and is not a placeholder."""
+        key = self.GEMINI_API_KEY.strip().lower()
         if not key:
             return False
         return not any(key.startswith(p) for p in _PLACEHOLDER_PREFIXES)

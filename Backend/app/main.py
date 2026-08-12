@@ -26,6 +26,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Global Exception Handler
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "An internal server error occurred while processing the request.", "path": request.url.path}
+    )
+
 # Request timing middleware
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):

@@ -11,6 +11,8 @@ class InvestigationRequest(BaseModel):
     is_demo: bool = False
 
 @router.post("/full")
+@router.post("")
+@router.post("/")
 async def analyze_full_investigation(request: InvestigationRequest):
     """
     Run complete 360-degree ATHENA investigation:

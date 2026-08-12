@@ -11,7 +11,7 @@ async def search_reddit_posts(query: str, limit: int = 10) -> List[Dict[str, Any
         encoded_query = urllib.parse.quote(query)
         url = f"{REDDIT_BASE}/search.json?q={encoded_query}&limit={limit}&sort=relevance&t=year"
 
-        async with httpx.AsyncClient(timeout=10.0) as client:
+        async with httpx.AsyncClient(timeout=2.0) as client:
             resp = await client.get(
                 url,
                 headers={"User-Agent": "ATHENA-MediaLiteracy/1.0 (Hackathon Demo)"}

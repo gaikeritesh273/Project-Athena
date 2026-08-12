@@ -21,7 +21,7 @@ RSS_FEED_URLS = [
 ]
 
 
-async def fetch_rss_feed(feed_url: str, timeout: float = 8.0) -> List[Dict[str, Any]]:
+async def fetch_rss_feed(feed_url: str, timeout: float = 2.0) -> List[Dict[str, Any]]:
     """Fetch and parse a single RSS feed."""
     try:
         async with httpx.AsyncClient(timeout=timeout, follow_redirects=True) as client:
