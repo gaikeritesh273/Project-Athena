@@ -1,13 +1,14 @@
-"""GNews API integration (free tier: 100 req/day)."""
+"""GNews API integration (free tier: 100 req/day).
+Gracefully handles missing keys, rate limits (429), and auth errors (401/403).
+"""
 import httpx
 from typing import List, Dict, Any
-from app.config import get_settings
 
 GNEWS_BASE = "https://gnews.io/api/v4"
 
 async def search_gnews(query: str, api_key: str, max_results: int = 5) -> List[Dict[str, Any]]:
-    """Search GNews for articles matching a query."""
-    if not api_key:
+    """Search GNews for articles matching a query. Returns [] on any failure."""
+    if not api_key or not api_key.strip():
         return []
 
     try:
@@ -22,6 +23,13 @@ async def search_gnews(query: str, api_key: str, max_results: int = 5) -> List[D
 
         async with httpx.AsyncClient(timeout=10.0) as client:
             resp = await client.get(url, params=params)
+
+            # Rate limited
+            if resp.status_code == 429:
+                return []
+            # Auth error — key invalid or quota exhausted
+            if resp.status_code in (401, 403):
+                return []
             if resp.status_code != 200:
                 return []
 

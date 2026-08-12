@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { AuthProvider } from '@/hooks/useAuth';
 import { I18nProvider } from '@/lib/i18n';
+import { ThemeProvider } from '@/lib/theme';
 import Navbar from '@/components/Navbar';
 import { Toaster } from 'react-hot-toast';
 
@@ -12,21 +13,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
-      <body className="bg-[#0B0F19] text-[#F8FAFC] antialiased">
-        <I18nProvider>
-          <AuthProvider>
-            <Navbar />
-            <main className="min-h-[calc(100vh-4rem)]">{children}</main>
-            <Toaster position="bottom-right" toastOptions={{
-              style: {
-                background: '#111827',
-                color: '#F8FAFC',
-                border: '1px solid rgba(255, 255, 255, 0.1)'
-              }
-            }} />
-          </AuthProvider>
-        </I18nProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased" style={{ backgroundColor: 'var(--color-bg-primary)', color: 'var(--color-text-main)' }}>
+        <ThemeProvider>
+          <I18nProvider>
+            <AuthProvider>
+              <Navbar />
+              <main className="min-h-[calc(100vh-4rem)]">{children}</main>
+              <Toaster position="bottom-right" toastOptions={{
+                style: {
+                  background: 'var(--color-bg-surface)',
+                  color: 'var(--color-text-main)',
+                  border: '1px solid var(--color-glass-border)'
+                }
+              }} />
+            </AuthProvider>
+          </I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

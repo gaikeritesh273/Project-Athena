@@ -25,6 +25,9 @@ async def search_newsapi_everything(query: str, api_key: str, page_size: int = 5
             if resp.status_code == 429:
                 # Rate limited
                 return [{"name": "NewsAPI", "title": "Rate limit reached", "url": "", "snippet": "NewsAPI free tier limit (100 req/day) reached. Using cached/demo data.", "date": "", "relevance": 0, "source_type": "newsapi", "rate_limited": True}]
+            if resp.status_code in (401, 403):
+                # Invalid or expired API key — fail silently
+                return []
             if resp.status_code != 200:
                 return []
 

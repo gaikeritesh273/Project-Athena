@@ -1,15 +1,17 @@
 'use client';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
-import { Shield, Menu, X, LogOut, User, Globe, Compass } from 'lucide-react';
+import { Shield, Menu, X, LogOut, User, Sun, Moon } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18n } from '@/lib/i18n';
+import { useTheme } from '@/lib/theme';
 
 export default function Navbar() {
   const { user, signOut } = useAuth();
   const { lang, setLang, t } = useI18n();
+  const { theme, toggleTheme } = useTheme();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -31,21 +33,33 @@ export default function Navbar() {
     { href: '/trainer', label: t('navTrainer') },
   ];
 
+  const isDark = theme === 'dark';
+
   return (
-    <nav className="sticky top-0 z-50 glass-card border-b border-slate-800/80 backdrop-blur-xl">
+    <nav
+      className="sticky top-0 z-50 glass-card border-b backdrop-blur-xl"
+      style={{ borderColor: 'var(--color-glass-border)', background: 'var(--color-nav-bg)' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo & Branding */}
+
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-teal-400 p-0.5 shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+              <div
+                className="w-full h-full rounded-[10px] flex items-center justify-center"
+                style={{ background: 'var(--color-bg-primary)' }}
+              >
                 <Shield className="w-5 h-5 text-sky-400" />
               </div>
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-slate-100 tracking-wide font-mono-code flex items-center gap-1.5">
+              <span
+                className="text-lg font-bold tracking-wide font-mono-code flex items-center gap-1.5"
+                style={{ color: 'var(--color-text-main)' }}
+              >
                 ATHENA
-                <span className="text-[10px] px-1.5 py-0.2 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 font-normal">
+                <span className="text-[10px] px-1.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 font-normal">
                   UNESCO 2026
                 </span>
               </span>
@@ -58,38 +72,86 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-xs font-semibold text-slate-300 hover:text-sky-400 transition-colors"
+                className="text-xs font-semibold transition-colors hover:text-sky-400"
+                style={{ color: 'var(--color-text-muted)' }}
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Right Actions: Language Switcher & Auth */}
+          {/* Right Actions */}
           <div className="hidden md:flex items-center gap-3">
+
             {/* Language Switcher */}
-            <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-xs">
+            <div
+              className="flex items-center rounded-lg p-0.5 text-xs border"
+              style={{ background: 'var(--color-bg-surface)', borderColor: 'var(--color-border)' }}
+            >
               <button
                 onClick={() => setLang('en')}
                 className={`px-2 py-1 rounded font-medium transition-colors ${
-                  lang === 'en' ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-slate-200'
+                  lang === 'en' ? 'bg-sky-500 text-slate-950 font-bold' : 'hover:text-sky-400'
                 }`}
+                style={lang !== 'en' ? { color: 'var(--color-text-muted)' } : {}}
               >
                 EN
               </button>
               <button
                 onClick={() => setLang('hi')}
                 className={`px-2 py-1 rounded font-medium transition-colors ${
-                  lang === 'hi' ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-slate-200'
+                  lang === 'hi' ? 'bg-sky-500 text-slate-950 font-bold' : 'hover:text-sky-400'
                 }`}
+                style={lang !== 'hi' ? { color: 'var(--color-text-muted)' } : {}}
               >
                 हिन्दी
               </button>
             </div>
 
+            {/* ── Theme Toggle ── */}
+            <motion.button
+              onClick={toggleTheme}
+              whileTap={{ scale: 0.9 }}
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="relative w-14 h-7 rounded-full border flex items-center px-1 overflow-hidden"
+              style={{
+                background: isDark ? 'rgba(14,165,233,0.15)' : 'rgba(245,158,11,0.15)',
+                borderColor: isDark ? 'rgba(14,165,233,0.35)' : 'rgba(245,158,11,0.35)',
+              }}
+              aria-label="Toggle theme"
+            >
+              {/* Track icons */}
+              <Moon
+                className="absolute left-1.5 w-3.5 h-3.5 text-sky-400"
+                style={{ opacity: isDark ? 1 : 0, transition: 'opacity 0.25s' }}
+              />
+              <Sun
+                className="absolute right-1.5 w-3.5 h-3.5 text-amber-400"
+                style={{ opacity: isDark ? 0 : 1, transition: 'opacity 0.25s' }}
+              />
+              {/* Pill thumb */}
+              <motion.span
+                layout
+                transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                className="absolute w-5 h-5 rounded-full shadow-md"
+                style={{
+                  left: isDark ? '3px' : 'calc(100% - 23px)',
+                  background: isDark ? '#0EA5E9' : '#F59E0B',
+                }}
+              />
+            </motion.button>
+
+            {/* Auth */}
             {user ? (
               <div className="flex items-center gap-2.5">
-                <span className="text-xs text-slate-300 font-medium flex items-center gap-1 bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
+                <span
+                  className="text-xs font-medium flex items-center gap-1 px-2.5 py-1.5 rounded-lg border"
+                  style={{
+                    color: 'var(--color-text-muted)',
+                    background: 'var(--color-bg-surface)',
+                    borderColor: 'var(--color-border)',
+                  }}
+                >
                   <User className="w-3.5 h-3.5 text-sky-400" />
                   {user.full_name || user.email?.split('@')[0]}
                 </span>
@@ -103,7 +165,11 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link href="/login" className="text-xs font-semibold text-slate-300 hover:text-slate-100 px-3 py-1.5">
+                <Link
+                  href="/login"
+                  className="text-xs font-semibold px-3 py-1.5 hover:text-slate-100 transition-colors"
+                  style={{ color: 'var(--color-text-muted)' }}
+                >
                   Sign In
                 </Link>
                 <Link
@@ -118,7 +184,8 @@ export default function Navbar() {
 
           {/* Mobile Toggle */}
           <button
-            className="md:hidden p-2 text-slate-300"
+            className="md:hidden p-2"
+            style={{ color: 'var(--color-text-muted)' }}
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -133,14 +200,57 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden border-t border-slate-800 bg-slate-950/95 backdrop-blur-xl px-4 py-4 space-y-3"
+            className="md:hidden border-t px-4 py-4 space-y-3 backdrop-blur-xl"
+            style={{
+              borderColor: 'var(--color-border)',
+              background: 'var(--color-nav-bg)',
+            }}
           >
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <span className="text-xs text-slate-400">Language:</span>
-              <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-xs">
-                <button onClick={() => setLang('en')} className={`px-2 py-0.5 rounded ${lang === 'en' ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400'}`}>EN</button>
-                <button onClick={() => setLang('hi')} className={`px-2 py-0.5 rounded ${lang === 'hi' ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400'}`}>हिन्दी</button>
+            {/* Mobile Language + Theme Row */}
+            <div
+              className="flex items-center justify-between border-b pb-3"
+              style={{ borderColor: 'var(--color-border)' }}
+            >
+              <div
+                className="flex items-center rounded-lg p-0.5 text-xs border"
+                style={{ background: 'var(--color-bg-surface)', borderColor: 'var(--color-border)' }}
+              >
+                <button
+                  onClick={() => setLang('en')}
+                  className={`px-2 py-0.5 rounded ${lang === 'en' ? 'bg-sky-500 text-slate-950 font-bold' : ''}`}
+                  style={lang !== 'en' ? { color: 'var(--color-text-muted)' } : {}}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => setLang('hi')}
+                  className={`px-2 py-0.5 rounded ${lang === 'hi' ? 'bg-sky-500 text-slate-950 font-bold' : ''}`}
+                  style={lang !== 'hi' ? { color: 'var(--color-text-muted)' } : {}}
+                >
+                  हिन्दी
+                </button>
               </div>
+
+              {/* Mobile Theme Toggle */}
+              <motion.button
+                onClick={toggleTheme}
+                whileTap={{ scale: 0.9 }}
+                className="relative w-14 h-7 rounded-full border flex items-center px-1 overflow-hidden"
+                style={{
+                  background: isDark ? 'rgba(14,165,233,0.15)' : 'rgba(245,158,11,0.15)',
+                  borderColor: isDark ? 'rgba(14,165,233,0.35)' : 'rgba(245,158,11,0.35)',
+                }}
+                aria-label="Toggle theme"
+              >
+                <Moon className="absolute left-1.5 w-3.5 h-3.5 text-sky-400" style={{ opacity: isDark ? 1 : 0, transition: 'opacity 0.25s' }} />
+                <Sun className="absolute right-1.5 w-3.5 h-3.5 text-amber-400" style={{ opacity: isDark ? 0 : 1, transition: 'opacity 0.25s' }} />
+                <motion.span
+                  layout
+                  transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                  className="absolute w-5 h-5 rounded-full shadow-md"
+                  style={{ left: isDark ? '3px' : 'calc(100% - 23px)', background: isDark ? '#0EA5E9' : '#F59E0B' }}
+                />
+              </motion.button>
             </div>
 
             {navLinks.map((link) => (
@@ -148,7 +258,8 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="block text-sm font-semibold text-slate-300 hover:text-sky-400"
+                className="block text-sm font-semibold hover:text-sky-400 transition-colors"
+                style={{ color: 'var(--color-text-muted)' }}
               >
                 {link.label}
               </Link>
@@ -162,8 +273,8 @@ export default function Navbar() {
                 <LogOut className="w-4 h-4" /> Sign Out
               </button>
             ) : (
-              <div className="flex flex-col gap-2 pt-2 border-t border-slate-800">
-                <Link href="/login" onClick={() => setMobileOpen(false)} className="text-xs font-semibold text-slate-300">Sign In</Link>
+              <div className="flex flex-col gap-2 pt-2 border-t" style={{ borderColor: 'var(--color-border)' }}>
+                <Link href="/login" onClick={() => setMobileOpen(false)} className="text-xs font-semibold" style={{ color: 'var(--color-text-muted)' }}>Sign In</Link>
                 <Link href="/investigate" onClick={() => setMobileOpen(false)} className="text-xs font-bold text-sky-400">Investigate Now</Link>
               </div>
             )}

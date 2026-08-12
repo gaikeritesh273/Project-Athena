@@ -224,8 +224,8 @@ async def check_claim(text: str, url: Optional[str] = None) -> Dict[str, Any]:
             all_sources.extend(demo_val["sources"])
             total_sources_queried += len(demo_val["sources"])
 
-        # ── Step 2: NewsAPI ──
-        if settings.NEWSAPI_KEY:
+        # ── Step 2: NewsAPI (only if key is real, not a placeholder) ──
+        if settings.has_newsapi:
             try:
                 news_sources = await search_newsapi_everything(claim, settings.NEWSAPI_KEY, page_size=5)
                 if news_sources and not any(s.get("rate_limited") for s in news_sources):
@@ -234,8 +234,8 @@ async def check_claim(text: str, url: Optional[str] = None) -> Dict[str, Any]:
             except Exception as e:
                 api_errors.append(f"NewsAPI: {str(e)}")
 
-        # ── Step 3: GNews Fallback ──
-        if settings.GNEWS_KEY and len([s for s in all_sources if s.get("source_type") in ("newsapi", "rss")]) < 3:
+        # ── Step 3: GNews (runs always when key is real — primary source when NewsAPI is absent) ──
+        if settings.has_gnews:
             try:
                 gnews_sources = await search_gnews(claim, settings.GNEWS_KEY, max_results=5)
                 if gnews_sources:
