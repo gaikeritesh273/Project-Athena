@@ -130,7 +130,7 @@ export default function Trainer() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-athena-offwhite flex items-center justify-center">
+      <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500" />
       </div>
     );
@@ -139,21 +139,21 @@ export default function Trainer() {
   if (finished) {
     const percentage = questions.length > 0 ? Math.round((score / questions.length) * 100) : 0;
     return (
-      <div className="min-h-screen bg-athena-offwhite py-12 px-4">
+      <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto text-center">
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="mb-8">
-            <Trophy className="w-20 h-20 text-athena-amber mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-athena-indigo mb-2">Quiz Complete!</h1>
-            <p className="text-athena-muted">You scored {score} out of {questions.length}</p>
+            <Trophy className="w-20 h-20 text-amber-400 mx-auto mb-4" />
+            <h1 className="text-3xl font-bold text-slate-100 text-editorial mb-2">Quiz Complete!</h1>
+            <p className="text-slate-400">You scored {score} out of {questions.length}</p>
           </motion.div>
 
-          <div className={`text-5xl font-bold mb-8 ${percentage >= 80 ? 'text-green-600' : percentage >= 60 ? 'text-athena-amber' : 'text-athena-alert'}`}>
+          <div className={`text-5xl font-bold mb-8 font-mono-code ${percentage >= 80 ? 'text-emerald-400' : percentage >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>
             {percentage}%
           </div>
 
           <button
             onClick={reset}
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-purple-500 text-white font-semibold hover:bg-purple-600 transition-all"
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-purple-600 text-white font-bold hover:bg-purple-500 transition-all shadow-md shadow-purple-600/20"
           >
             <RotateCcw className="w-5 h-5" /> Try Again
           </button>
@@ -167,13 +167,13 @@ export default function Trainer() {
 
   if (!q) {
     return (
-      <div className="min-h-screen bg-athena-offwhite py-12 px-4">
+      <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto text-center">
-          <h1 className="text-2xl font-bold text-athena-indigo mb-4">No questions available</h1>
-          <p className="text-athena-muted mb-6">The quiz service did not return any questions right now.</p>
+          <h1 className="text-2xl font-bold text-slate-100 text-editorial mb-4">No questions available</h1>
+          <p className="text-slate-400 mb-6">The quiz service did not return any questions right now.</p>
           <button
             onClick={reset}
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-purple-500 text-white font-semibold hover:bg-purple-600 transition-all"
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-purple-600 text-white font-bold hover:bg-purple-500 transition-all shadow-md shadow-purple-600/20"
           >
             <RotateCcw className="w-5 h-5" /> Try Again
           </button>
@@ -183,18 +183,18 @@ export default function Trainer() {
   }
 
   return (
-    <div className="min-h-screen bg-athena-offwhite py-12 px-4">
+    <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold text-athena-indigo flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-purple-500" /> Media Trainer
+          <h1 className="text-2xl font-bold text-slate-100 text-editorial flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-purple-400" /> Media Trainer
           </h1>
-          <span className="text-sm text-athena-muted">Question {current + 1} of {totalQuestions}</span>
+          <span className="text-sm text-slate-400 font-mono-code">Question {current + 1} of {totalQuestions}</span>
         </div>
 
-        <div className="w-full bg-athena-border rounded-full h-2 mb-8">
+        <div className="w-full bg-slate-900 rounded-full h-2 mb-8 border border-slate-800">
           <motion.div
-            className="bg-purple-500 h-2 rounded-full"
+            className="bg-purple-500 h-full rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${((current + 1) / totalQuestions) * 100}%`}}
           />
@@ -204,25 +204,25 @@ export default function Trainer() {
           key={q.id}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white rounded-2xl border border-athena-border shadow-sm p-6 mb-6"
+          className="glass-card rounded-2xl border border-slate-800 p-6 mb-6"
         >
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-xs font-medium px-2 py-1 rounded-full bg-purple-50 text-purple-600">{q.category}</span>
-            <span className="text-xs font-medium px-2 py-1 rounded-full bg-athena-offwhite text-athena-muted">{q.difficulty}</span>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">{q.category}</span>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">{q.difficulty}</span>
           </div>
-          <h2 className="text-lg font-semibold text-athena-indigo mb-6">{q.question}</h2>
+          <h2 className="text-lg font-semibold text-slate-100 mb-6">{q.question}</h2>
 
           <div className="space-y-3">
             {q.options.map((option, i) => {
               const isSelected = selected === i;
               const isCorrect = i === q.correct_index;
-              let btnClass = 'p-4 rounded-xl border-2 text-left transition-all text-sm ';
+              let btnClass = 'p-4 rounded-xl border text-left transition-all text-sm ';
               if (showExplanation) {
-                if (isCorrect) btnClass += 'border-green-500 bg-green-50 text-green-800';
-                else if (isSelected) btnClass += 'border-red-500 bg-red-50 text-red-800';
-                else btnClass += 'border-athena-border bg-white text-athena-muted';
+                if (isCorrect) btnClass += 'border-emerald-500/50 bg-emerald-950/40 text-emerald-200';
+                else if (isSelected) btnClass += 'border-rose-500/50 bg-rose-950/40 text-rose-200';
+                else btnClass += 'border-slate-800 bg-slate-950/40 text-slate-500';
               } else {
-                btnClass += isSelected ? 'border-purple-500 bg-purple-50 text-athena-indigo' : 'border-athena-border bg-white hover:border-purple-300 text-athena-text';
+                btnClass += isSelected ? 'border-purple-500 bg-purple-950/40 text-slate-100' : 'border-slate-800 bg-slate-900/60 hover:border-purple-500/40 text-slate-300';
               }
 
               return (
@@ -232,9 +232,9 @@ export default function Trainer() {
                   disabled={showExplanation}
                   className={btnClass + ' w-full flex items-center gap-3'}
                 >
-                  {showExplanation && isCorrect && <CheckCircle className="w-5 h-5 text-green-600 shrink-0" />}
-                  {showExplanation && isSelected && !isCorrect && <XCircle className="w-5 h-5 text-red-600 shrink-0" />}
-                  <span className="font-mono text-xs text-athena-muted w-6">{String.fromCharCode(65 + i)}</span>
+                  {showExplanation && isCorrect && <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />}
+                  {showExplanation && isSelected && !isCorrect && <XCircle className="w-5 h-5 text-rose-400 shrink-0" />}
+                  <span className="font-mono-code text-xs text-slate-400 w-6">{String.fromCharCode(65 + i)}</span>
                   {option}
                 </button>
               );
@@ -246,9 +246,9 @@ export default function Trainer() {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="mt-4 p-4 rounded-xl bg-purple-50 border border-purple-200"
+                className="mt-4 p-4 rounded-xl bg-purple-950/30 border border-purple-500/30"
               >
-                <p className="text-sm text-athena-indigo">{q.explanation}</p>
+                <p className="text-sm text-purple-200">{q.explanation}</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -259,7 +259,7 @@ export default function Trainer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             onClick={handleNext}
-            className="w-full py-3 rounded-xl bg-purple-500 text-white font-semibold hover:bg-purple-600 transition-all flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl bg-purple-600 text-white font-bold hover:bg-purple-500 transition-all flex items-center justify-center gap-2 shadow-md shadow-purple-600/20"
           >
             {current < questions.length - 1 ? <>Next <ArrowRight className="w-5 h-5" /></> : 'Finish Quiz'}
           </motion.button>

@@ -5,12 +5,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#0F1720",       // primary background — case-file navy-black
-        paper: "#EDE8DC",     // primary foreground — aged paper
-        verified: "#2F6F5E",  // confirmed / trust accent (teal-green)
-        flagged: "#C2542A",   // disputed / warning accent (rust-amber)
-        slate: "#5B6B75",     // secondary text / hairlines
-        panel: "#161F2B",     // raised surface on ink
+        // Tailwind default slate color system is used throughout dark-glass UI
       },
       fontFamily: {
         display: ["var(--font-display)", "serif"],

@@ -7,6 +7,7 @@ Enforces non-binary, epistemologically sound assessment language.
 import os
 import json
 import re
+import httpx
 from typing import Dict, Any, List, Optional
 from datetime import datetime, timezone
 
@@ -244,16 +245,54 @@ class DeterministicDemoProvider(BaseAIProvider):
         return payload
 
 class LiveAIProvider(BaseAIProvider):
-    """Live AI Provider using environment API keys (e.g. Gemini / OpenAI)."""
+    """Live AI Provider using Gemini REST API with safe deterministic fallback."""
     def __init__(self, api_key: str):
         self.api_key = api_key
 
     async def analyze_content(self, text: str, url: Optional[str] = None) -> Dict[str, Any]:
-        fallback = DeterministicDemoProvider()
-        return await fallback.analyze_content(text, url)
+        fallback_provider = DeterministicDemoProvider()
+        fallback_data = await fallback_provider.analyze_content(text, url)
+
+        # Check for placeholder keys
+        invalid_keys = ["your-gemini-key", "your_gemini_api_key_here", "your-openai-key", "none", "null", ""]
+        if not self.api_key or self.api_key.strip().lower() in invalid_keys:
+            return fallback_data
+
+        try:
+            prompt = (
+                f"You are ATHENA, a media literacy assessment assistant. Analyze this claim/text: '{text}'. "
+                "Respond with valid JSON containing keys: 'claim_summary' (with primary_claim, domain, virality_risk), "
+                "'trust_passport' (with claim, assessment, confidence_level, uncertainty_notes, suggested_actions), "
+                "'perspective_explorer' (with perspectives, common_ground), "
+                "'narrative_memory' (with title, timeline), and 'ai_tutor' (with explanation, quiz)."
+            )
+            url_endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={self.api_key}"
+            async with httpx.AsyncClient(timeout=8.0) as client:
+                resp = await client.post(
+                    url_endpoint,
+                    json={"contents": [{"parts": [{"text": prompt}]}]},
+                    headers={"Content-Type": "application/json"}
+                )
+                if resp.status_code == 200:
+                    res_json = resp.json()
+                    candidates = res_json.get("candidates", [])
+                    if candidates:
+                        raw_text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                        json_match = re.search(r"\{.*\}", raw_text, re.DOTALL)
+                        if json_match:
+                            parsed = json.loads(json_match.group(0))
+                            if isinstance(parsed, dict) and "trust_passport" in parsed:
+                                parsed["is_demo"] = False
+                                parsed["input_text"] = text
+                                return parsed
+        except Exception as e:
+            # Safe fallback on any timeout or API error
+            pass
+
+        return fallback_data
 
 def get_ai_provider() -> BaseAIProvider:
-    """Factory to return live provider if configured, else deterministic demo provider."""
+    """Factory to return live provider if configured with non-placeholder key, else deterministic demo provider."""
     gemini_key = os.getenv("GEMINI_API_KEY") or os.getenv("OPENAI_API_KEY")
     if gemini_key:
         return LiveAIProvider(gemini_key)

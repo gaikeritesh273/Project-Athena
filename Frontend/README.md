@@ -10,7 +10,7 @@ Three.js landing hero.
 npm install
 cp .env.local.example .env.local
 # fill in NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY,
-# and NEXT_PUBLIC_ATHENA_API_URL (your FastAPI backend)
+# and NEXT_PUBLIC_API_URL (your FastAPI backend)
 npm run dev
 ```
 
@@ -44,7 +44,7 @@ src/
 ## Backend wiring
 
 The three tool pages (`claim-checker`, `bias-detector`, `source-scorer`)
-POST to `${NEXT_PUBLIC_ATHENA_API_URL}/api/<tool-name>`. Until that FastAPI
+POST to `${NEXT_PUBLIC_API_URL}/api/<tool-name>`. Until that FastAPI
 service is running, each page falls back to a clearly-labeled sample result
 so the UI is fully inspectable on its own — swap in your real backend and
 those fallbacks stop firing.

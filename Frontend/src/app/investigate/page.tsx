@@ -12,6 +12,34 @@ import MediaLiteracyProfile from '@/components/MediaLiteracyProfile';
 import { useI18n } from '@/lib/i18n';
 import toast from 'react-hot-toast';
 
+interface TabButtonProps {
+  id: string;
+  active: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  label: string;
+  activeColor: string;
+}
+
+function TabButton({ id, active, onClick, icon, label, activeColor }: TabButtonProps) {
+  return (
+    <button
+      role="tab"
+      id={`tab-${id}`}
+      aria-selected={active}
+      aria-controls={`panel-${id}`}
+      onClick={onClick}
+      className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+        active
+          ? `${activeColor} text-slate-950 shadow-md`
+          : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
+      }`}
+    >
+      {icon} {label}
+    </button>
+  );
+}
+
 function InvestigationWorkspaceInner() {
   const { t } = useI18n();
   const searchParams = useSearchParams();
@@ -43,11 +71,10 @@ function InvestigationWorkspaceInner() {
     setAnalysisData(null);
     setStepIndex(0);
 
-    // Progression animation steps
-    const timer1 = setTimeout(() => setStepIndex(1), 300);
-    const timer2 = setTimeout(() => setStepIndex(2), 600);
-    const timer3 = setTimeout(() => setStepIndex(3), 900);
-    const timer4 = setTimeout(() => setStepIndex(4), 1200);
+    // Dynamic request-bound stepper timer
+    const stepInterval = setInterval(() => {
+      setStepIndex((prev) => (prev < 3 ? prev + 1 : prev));
+    }, 250);
 
     try {
       const endpoint = `${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/investigate/full`;
@@ -73,72 +100,37 @@ function InvestigationWorkspaceInner() {
         const data = await fallbackRes.json();
         setAnalysisData(data);
       } else {
-        // Embedded client fallback for absolute stability
+        // Minimum client-side offline fallback shape
+        // NOTE: Keep minimal structure synchronized with Backend/app/services/ai_service.py DEMO_INVESTIGATION_PAYLOAD
         setAnalysisData({
           is_demo: true,
-          input_text: textToAnalyze || "BREAKING: Scientists have officially approved a revolutionary technology that can eliminate all digital misinformation.",
+          input_text: textToAnalyze || "BREAKING: Scientists approve quantum frequency AI tool.",
           trust_passport: {
-            claim: textToAnalyze || "Scientists approved a revolutionary AI quantum frequency technology that automatically eliminates all digital misinformation.",
+            claim: textToAnalyze || "Scientists approved a revolutionary AI quantum frequency technology.",
             source: { origin: "Unverified Viral Social Media Post", publisher: "@TechBreakthroughsToday", transparency_score: "Low" },
-            evidence: {
-              supporting_count: 0,
-              conflicting_count: 3,
-              unverified_count: 1,
-              conflicting_items: [
-                { title: "Quantum AI Misinformation Scams: A Fact Check", verdict: "Contradicted by International Fact-Checking Network." },
-                { title: "MIT Technology Review on AI Verification Limits", verdict: "Current AI cannot determine absolute truth without human context." }
-              ]
-            },
-            context: { missing_context: ["No peer-reviewed research paper provided.", "Buzzwords used without scientific definition."] },
-            language_analysis: { sensationalism_score: 88, loaded_words: ["BREAKING", "revolutionary", "eliminate all"] },
+            evidence: { supporting_count: 0, conflicting_count: 3, unverified_count: 1, conflicting_items: [{ title: "Quantum AI Fact Check", verdict: "Contradicted." }] },
+            context: { missing_context: ["No peer-reviewed paper provided."], historical_precedent: "Sensationalized claims surface during tech summits." },
+            language_analysis: { sensationalism_score: 88, loaded_words: ["BREAKING", "revolutionary"] },
             assessment: "Evidence is currently insufficient to support this claim.",
             confidence_level: "High (Confidence in lack of evidence)",
-            uncertainty_notes: "No official press releases from accredited research universities have been published.",
-            suggested_actions: ["Check PubMed or arXiv for peer-reviewed papers.", "Verify publisher creation date."]
+            uncertainty_notes: "No official press release found.",
+            suggested_actions: ["Check peer-reviewed databases."]
           },
           perspective_explorer: {
-            perspectives: [
-              { category: "Scientific & Academic", source_name: "IEEE Spectrum", stance: "Skeptical", summary: "Highlights that frequency scans are meaningless for text analysis.", quote: "Natural language requires contextual reasoning." },
-              { category: "Fact-Checking Community", source_name: "PolitiFact", stance: "Debunked", summary: "Traced claim to clickbait blog.", quote: "Claim inflates hypothetical concepts into a fake breakthrough." }
-            ],
-            common_ground: "All credible bodies agree that automated technology cannot eliminate misinformation without context.",
-            key_differences: "Clickbait sites focus on hype, while scientific institutions focus on methodology.",
-            remaining_uncertainties: "Whether the post was satire or a scam campaign."
+            perspectives: [{ category: "Scientific & Academic", source_name: "IEEE Spectrum", stance: "Skeptical", summary: "Frequency scans are invalid for text.", quote: "Requires contextual reasoning." }],
+            common_ground: "Credible bodies agree context is required.", key_differences: "Hype vs empirical science.", remaining_uncertainties: "Satire vs scam."
           },
-          narrative_memory: {
-            title: "Claim Evolution Timeline",
-            timeline: [
-              { step: 1, date: "2026-08-01", headline: "Could Quantum Computing Speed Up Text Parsing?", what_changed: "Theoretical discussion", source: "Academic Blog" },
-              { step: 2, date: "2026-08-08", headline: "BREAKING: Scientists approve technology that eliminates all misinformation!", what_changed: "Added fake scientific authority", source: "Viral Social Media" }
-            ]
-          },
+          narrative_memory: { title: "Claim Evolution Timeline", timeline: [{ step: 1, date: "2026-08-01", headline: "Quantum parsing paper", what_changed: "Theoretical idea", source: "Blog" }] },
           ai_tutor: {
-            explanation: {
-              core_concept: "Spotting Sensationalized Absolute Claims",
-              why_misleading: "Notice absolute words like 'officially approved' and 'eliminate ALL'. Science works through guarded incremental evidence.",
-              literacy_skills_taught: ["Identify trigger words", "Look for named universities"]
-            },
-            quiz: {
-              title: "Spotting Misleading Framing Challenge",
-              questions: [
-                {
-                  id: "q1",
-                  question: "Which headline demonstrates proper scientific nuance?",
-                  options: ["A. Scientists DESTROY myth!", "B. Study evaluates potential of ML in assisting fact-checkers."],
-                  correct_option: 1,
-                  explanation: "Option B uses guarded, precise language."
-                }
-              ]
-            }
+            explanation: { core_concept: "Spotting Sensational Claims", why_misleading: "Look for absolute claims.", literacy_skills_taught: ["Identify trigger words"] },
+            quiz: { title: "Spotting Misleading Framing", questions: [{ id: "q1", question: "Which headline demonstrates scientific nuance?", options: ["A. Scientists DESTROY myth!", "B. Study evaluates ML potential."], correct_option: 1, explanation: "Guarded language." }] }
           }
         });
       }
       toast.success('Loaded Pitch Demo Investigation.');
     } finally {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearTimeout(timer4);
+      clearInterval(stepInterval);
+      setStepIndex(4);
       setLoading(false);
     }
   };
@@ -245,79 +237,75 @@ function InvestigationWorkspaceInner() {
             className="space-y-6"
           >
             {/* Tabs Bar */}
-            <div className="flex flex-wrap items-center justify-center gap-2 border-b border-slate-800 pb-3">
-              <button
+            <div role="tablist" aria-label="Investigation pillars" className="flex flex-wrap items-center justify-center gap-2 border-b border-slate-800 pb-3">
+              <TabButton
+                id="passport"
+                active={activeTab === 'passport'}
                 onClick={() => setActiveTab('passport')}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-                  activeTab === 'passport'
-                    ? 'bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20'
-                    : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
-                }`}
-              >
-                <ShieldCheck className="w-4 h-4" /> {t('tabPassport')}
-              </button>
-
-              <button
+                icon={<ShieldCheck className="w-4 h-4" />}
+                label={t('tabPassport')}
+                activeColor="bg-sky-500"
+              />
+              <TabButton
+                id="perspectives"
+                active={activeTab === 'perspectives'}
                 onClick={() => setActiveTab('perspectives')}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-                  activeTab === 'perspectives'
-                    ? 'bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20'
-                    : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
-                }`}
-              >
-                <Compass className="w-4 h-4" /> {t('tabPerspectives')}
-              </button>
-
-              <button
+                icon={<Compass className="w-4 h-4" />}
+                label={t('tabPerspectives')}
+                activeColor="bg-sky-500"
+              />
+              <TabButton
+                id="narrative"
+                active={activeTab === 'narrative'}
                 onClick={() => setActiveTab('narrative')}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-                  activeTab === 'narrative'
-                    ? 'bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20'
-                    : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
-                }`}
-              >
-                <Clock className="w-4 h-4" /> {t('tabNarrative')}
-              </button>
-
-              <button
+                icon={<Clock className="w-4 h-4" />}
+                label={t('tabNarrative')}
+                activeColor="bg-sky-500"
+              />
+              <TabButton
+                id="tutor"
+                active={activeTab === 'tutor'}
                 onClick={() => setActiveTab('tutor')}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-                  activeTab === 'tutor'
-                    ? 'bg-purple-500 text-slate-950 shadow-md shadow-purple-500/20'
-                    : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
-                }`}
-              >
-                <Brain className="w-4 h-4" /> {t('tabTutor')}
-              </button>
-
-              <button
+                icon={<Brain className="w-4 h-4" />}
+                label={t('tabTutor')}
+                activeColor="bg-purple-500"
+              />
+              <TabButton
+                id="profile"
+                active={activeTab === 'profile'}
                 onClick={() => setActiveTab('profile')}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-                  activeTab === 'profile'
-                    ? 'bg-teal-500 text-slate-950 shadow-md shadow-teal-500/20'
-                    : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
-                }`}
-              >
-                <User className="w-4 h-4" /> {t('tabProfile')}
-              </button>
+                icon={<User className="w-4 h-4" />}
+                label={t('tabProfile')}
+                activeColor="bg-teal-500"
+              />
             </div>
 
             {/* Active Tab Panel */}
             <div className="pt-2">
               {activeTab === 'passport' && (
-                <TrustPassportCard data={analysisData.trust_passport} />
+                <div role="tabpanel" id="panel-passport" aria-labelledby="tab-passport">
+                  <TrustPassportCard data={analysisData.trust_passport} />
+                </div>
               )}
               {activeTab === 'perspectives' && (
-                <PerspectiveExplorer data={analysisData.perspective_explorer} />
+                <div role="tabpanel" id="panel-perspectives" aria-labelledby="tab-perspectives">
+                  <PerspectiveExplorer data={analysisData.perspective_explorer} />
+                </div>
               )}
               {activeTab === 'narrative' && (
-                <NarrativeMemoryTimeline data={analysisData.narrative_memory} />
+                <div role="tabpanel" id="panel-narrative" aria-labelledby="tab-narrative">
+                  <NarrativeMemoryTimeline data={analysisData.narrative_memory} />
+                </div>
               )}
               {activeTab === 'tutor' && (
-                <AITutorQuiz data={analysisData.ai_tutor} onCompleteQuiz={handleQuizComplete} />
+                <div role="tabpanel" id="panel-tutor" aria-labelledby="tab-tutor">
+                  <AITutorQuiz data={analysisData.ai_tutor} onCompleteQuiz={handleQuizComplete} />
+                </div>
               )}
               {activeTab === 'profile' && (
-                <MediaLiteracyProfile quizScore={userQuizScore} />
+                <div role="tabpanel" id="panel-profile" aria-labelledby="tab-profile">
+                  <MediaLiteracyProfile quizScore={userQuizScore} />
+                </div>
               )}
             </div>
           </motion.div>
