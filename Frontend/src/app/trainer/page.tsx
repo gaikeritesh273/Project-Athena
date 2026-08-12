@@ -37,7 +37,7 @@ export default function Trainer() {
   const fetchQuestions = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/quiz/questions`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/quiz/questions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ limit: 5 }),
@@ -130,7 +130,7 @@ export default function Trainer() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-main)] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500" />
       </div>
     );
@@ -139,7 +139,7 @@ export default function Trainer() {
   if (finished) {
     const percentage = questions.length > 0 ? Math.round((score / questions.length) * 100) : 0;
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-main)] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto text-center">
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="mb-8">
             <Trophy className="w-20 h-20 text-amber-400 mx-auto mb-4" />
@@ -167,7 +167,7 @@ export default function Trainer() {
 
   if (!q) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-main)] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto text-center">
           <h1 className="text-2xl font-bold text-slate-100 text-editorial mb-4">No questions available</h1>
           <p className="text-slate-400 mb-6">The quiz service did not return any questions right now.</p>
@@ -183,7 +183,7 @@ export default function Trainer() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-main)] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-slate-100 text-editorial flex items-center gap-2">

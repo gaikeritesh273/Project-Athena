@@ -29,7 +29,7 @@ export default function ClaimChecker() {
     setResults(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/claims/analyze`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/claims/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: trimmedInput }),
@@ -79,7 +79,7 @@ export default function ClaimChecker() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-main)] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
           <h1 className="text-3xl font-bold text-slate-100 text-editorial mb-2">Claim Checker</h1>
