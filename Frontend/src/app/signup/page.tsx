@@ -7,6 +7,8 @@ import { motion } from 'framer-motion';
 import { Eye, EyeOff, Mail, Phone, Calendar, User, Lock, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+import AthenaLogo from '@/components/AthenaLogo';
+
 export default function SignupPage() {
   const { signUp } = useAuth();
   const router = useRouter();
@@ -45,14 +47,15 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#0B0F19] text-[#F8FAFC]">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[var(--color-bg-primary)] text-[var(--color-text-main)]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
         <div className="glass-card rounded-2xl p-8 shadow-2xl border border-slate-800">
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 flex flex-col items-center">
+            <AthenaLogo size="lg" className="mb-4" />
             <h1 className="text-2xl font-bold text-slate-100 text-editorial">Create Your Account</h1>
             <p className="text-sm text-slate-400 mt-1">Join ATHENA and start investigating</p>
           </div>

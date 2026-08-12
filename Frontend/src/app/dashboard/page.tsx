@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { formatCaseDate } from "@/lib/utils";
+import AthenaLogo from "@/components/AthenaLogo";
 
 const RECENT = [
   { id: "C-0104", tool: "Claim Checker", subject: "Vaccine mandate claim", verdict: "Disputed", date: new Date("2026-08-09") },
@@ -30,7 +31,7 @@ export default function DashboardPage() {
 
   if (loading || !isAuthenticated) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center bg-[#0B0F19] text-[#F8FAFC]">
+      <div className="flex min-h-[60vh] items-center justify-center bg-[var(--color-bg-primary)] text-[var(--color-text-main)]">
         <div className="flex items-center gap-3 font-mono-code text-sm text-slate-400">
           <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-sky-400" />
           <span>loading case file…</span>
@@ -40,8 +41,11 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-main)] py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
+        <div className="mb-6 flex items-center justify-between">
+          <AthenaLogo size="lg" />
+        </div>
         <div className="flex items-center justify-between gap-4 mb-2">
           <span className="badge-cyan px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
             case file

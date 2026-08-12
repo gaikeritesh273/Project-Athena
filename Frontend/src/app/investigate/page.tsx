@@ -9,6 +9,7 @@ import PerspectiveExplorer from '@/components/PerspectiveExplorer';
 import NarrativeMemoryTimeline from '@/components/NarrativeMemoryTimeline';
 import AITutorQuiz from '@/components/AITutorQuiz';
 import MediaLiteracyProfile from '@/components/MediaLiteracyProfile';
+import AthenaLogo from '@/components/AthenaLogo';
 import { useI18n } from '@/lib/i18n';
 import toast from 'react-hot-toast';
 
@@ -148,11 +149,12 @@ function InvestigationWorkspaceInner() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-main)] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
-        
+
         {/* Workspace Header */}
-        <div className="text-center space-y-3 max-w-3xl mx-auto">
+        <div className="text-center space-y-3 max-w-3xl mx-auto flex flex-col items-center">
+          <AthenaLogo size="lg" className="mb-2" />
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full badge-cyan text-xs font-semibold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             UNESCO Hackathon 2026 Primary Demo
@@ -318,7 +320,7 @@ function InvestigationWorkspaceInner() {
 
 export default function InvestigationWorkspace() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#0B0F19] flex items-center justify-center"><Spinner /></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[var(--color-bg-primary)] flex items-center justify-center"><Spinner /></div>}>
       <InvestigationWorkspaceInner />
     </Suspense>
   );
