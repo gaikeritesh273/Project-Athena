@@ -8,7 +8,7 @@ import os
 import json
 import re
 from typing import Dict, Any, List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 
 # ───────────────────────────────────────────────
 # DETERMINISTIC DEMO DATASET FOR UNESCO PITCH
@@ -275,5 +275,5 @@ async def run_investigation(text: str, url: Optional[str] = None, is_demo_mode: 
         provider = get_ai_provider()
 
     result = await provider.analyze_content(text, url)
-    result["timestamp"] = datetime.utcnow().isoformat()
+    result["timestamp"] = datetime.now(timezone.utc).isoformat()
     return result

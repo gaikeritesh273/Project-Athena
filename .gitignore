@@ -1,0 +1,98 @@
+# ───────────────────────────────────────────────
+# ATHENA — Git Ignore Rules
+# ───────────────────────────────────────────────
+
+# Environment Files & Secrets (CRITICAL: Do not commit)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+Backend/.env
+Frontend/.env.local
+
+# Python Virtual Environments & Packages
+venv/
+.venv/
+Backend/venv/
+Backend/.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Node.js & Frontend Build Outputs
+node_modules/
+Frontend/node_modules/
+.next/
+Frontend/.next/
+out/
+Frontend/out/
+build/
+Frontend/build/
+.pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+npm-debug.log*
+*.tsbuildinfo
+
+# OS & System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDEs & Editor Configuration
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# Project Temporary Logs & Scratch
+*.log
+logs/
+temp/
+tmp/
+scratch/

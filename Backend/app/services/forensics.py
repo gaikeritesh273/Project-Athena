@@ -12,7 +12,7 @@ import hashlib
 from typing import Dict, Any, Optional, List
 from PIL import Image
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Free reverse image search endpoints (no API key needed)
 REVERSE_IMAGE_ENDPOINTS = {
@@ -300,7 +300,7 @@ def generate_forensics_report(image_bytes: bytes, filename: str = "image") -> Di
     return {
         "filename": filename,
         "image_hash": image_hash,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "overall_risk": overall_risk,
         "overall_assessment": risk_descriptions.get(overall_risk, "Unable to assess."),
         "risk_factors": risk_factors,

@@ -8,7 +8,7 @@ import json
 import hashlib
 import re
 from typing import List, Dict, Any, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from app.utils.redis_client import get_redis
 from app.config import get_settings
 
@@ -291,7 +291,7 @@ async def check_claim(text: str, url: Optional[str] = None) -> Dict[str, Any]:
         "claims": results,
         "cached": False,
         "sources_queried": total_sources_queried,
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }
 
     # Cache for 2 hours (3600 * 2)
