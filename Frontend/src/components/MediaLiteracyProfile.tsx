@@ -49,10 +49,15 @@ export default function MediaLiteracyProfile({ quizScore = 1, totalQuizzes = 1 }
 
       {/* Skills Matrix */}
       <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-6">
-        <h4 className="text-base font-bold text-slate-200 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-teal-400" />
-          Core Media Literacy Competencies
-        </h4>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-base font-bold text-slate-200 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-teal-400" />
+            Core Media Literacy Competencies
+          </h4>
+          <span className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full font-medium">
+            Illustrative example — full profile scoring is a planned feature
+          </span>
+        </div>
 
         <div className="space-y-4">
           {skills.map((skill, idx) => (

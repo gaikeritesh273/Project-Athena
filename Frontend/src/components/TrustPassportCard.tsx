@@ -54,6 +54,8 @@ export default function TrustPassportCard({ data }: TrustPassportProps) {
       <div className="glass-card rounded-xl overflow-hidden border border-slate-800">
         <button
           onClick={() => toggleSection('claim')}
+          aria-expanded={expandedSection === 'claim'}
+          aria-controls="tp-panel-claim"
           className="w-full p-4 flex items-center justify-between text-left bg-slate-900/60 hover:bg-slate-900 transition-colors"
         >
           <div className="flex items-center gap-3">
@@ -63,7 +65,7 @@ export default function TrustPassportCard({ data }: TrustPassportProps) {
           {expandedSection === 'claim' ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
         </button>
         {expandedSection === 'claim' && (
-          <div className="p-5 bg-slate-950/50 space-y-3 text-sm text-slate-300 border-t border-slate-800">
+          <div id="tp-panel-claim" className="p-5 bg-slate-950/50 space-y-3 text-sm text-slate-300 border-t border-slate-800">
             <p className="text-base font-medium text-slate-100 bg-slate-900/80 p-3.5 rounded-lg border border-slate-800">
               {claim}
             </p>
@@ -79,6 +81,8 @@ export default function TrustPassportCard({ data }: TrustPassportProps) {
       <div className="glass-card rounded-xl overflow-hidden border border-slate-800">
         <button
           onClick={() => toggleSection('source')}
+          aria-expanded={expandedSection === 'source'}
+          aria-controls="tp-panel-source"
           className="w-full p-4 flex items-center justify-between text-left bg-slate-900/60 hover:bg-slate-900 transition-colors"
         >
           <div className="flex items-center gap-3">
@@ -88,7 +92,7 @@ export default function TrustPassportCard({ data }: TrustPassportProps) {
           {expandedSection === 'source' ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
         </button>
         {expandedSection === 'source' && source && (
-          <div className="p-5 bg-slate-950/50 space-y-4 text-sm text-slate-300 border-t border-slate-800">
+          <div id="tp-panel-source" className="p-5 bg-slate-950/50 space-y-4 text-sm text-slate-300 border-t border-slate-800">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-3 bg-slate-900 rounded-lg border border-slate-800">
                 <div className="text-xs text-slate-400 mb-1">Origin</div>
@@ -111,6 +115,8 @@ export default function TrustPassportCard({ data }: TrustPassportProps) {
       <div className="glass-card rounded-xl overflow-hidden border border-slate-800">
         <button
           onClick={() => toggleSection('evidence')}
+          aria-expanded={expandedSection === 'evidence'}
+          aria-controls="tp-panel-evidence"
           className="w-full p-4 flex items-center justify-between text-left bg-slate-900/60 hover:bg-slate-900 transition-colors"
         >
           <div className="flex items-center gap-3">
@@ -120,7 +126,7 @@ export default function TrustPassportCard({ data }: TrustPassportProps) {
           {expandedSection === 'evidence' ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
         </button>
         {expandedSection === 'evidence' && evidence && (
-          <div className="p-5 bg-slate-950/50 space-y-4 text-sm border-t border-slate-800">
+          <div id="tp-panel-evidence" className="p-5 bg-slate-950/50 space-y-4 text-sm border-t border-slate-800">
             <div className="flex gap-3 text-xs">
               <span className="badge-green px-2.5 py-1 rounded-full font-medium">✓ Supporting ({evidence.supporting_count})</span>
               <span className="badge-red px-2.5 py-1 rounded-full font-medium">⚠ Conflicting ({evidence.conflicting_count})</span>
@@ -150,10 +156,51 @@ export default function TrustPassportCard({ data }: TrustPassportProps) {
         )}
       </div>
 
+      {/* Context Analysis */}
+      <div className="glass-card rounded-xl overflow-hidden border border-slate-800">
+        <button
+          onClick={() => toggleSection('context')}
+          aria-expanded={expandedSection === 'context'}
+          aria-controls="tp-panel-context"
+          className="w-full p-4 flex items-center justify-between text-left bg-slate-900/60 hover:bg-slate-900 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <HelpCircle className="w-5 h-5 text-amber-400" />
+            <span className="font-semibold text-slate-200">Context & Historical Precedent</span>
+          </div>
+          {expandedSection === 'context' ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+        </button>
+        {expandedSection === 'context' && context && (
+          <div id="tp-panel-context" className="p-5 bg-slate-950/50 space-y-4 text-sm text-slate-300 border-t border-slate-800">
+            {context.missing_context?.length > 0 && (
+              <div className="space-y-2">
+                <h5 className="text-xs font-semibold text-amber-400 uppercase tracking-wider">Missing Critical Context</h5>
+                <ul className="space-y-1.5 text-xs text-slate-300">
+                  {context.missing_context.map((item: string, idx: number) => (
+                    <li key={idx} className="flex items-start gap-2 bg-slate-900/80 p-2.5 rounded-lg border border-slate-800">
+                      <span className="text-amber-400 font-bold">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {context.historical_precedent && (
+              <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+                <div className="text-xs text-slate-400 mb-1 font-semibold">Historical Precedent</div>
+                <div className="text-xs text-slate-300">{context.historical_precedent}</div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
       {/* Language & Emotional Framing */}
       <div className="glass-card rounded-xl overflow-hidden border border-slate-800">
         <button
           onClick={() => toggleSection('language')}
+          aria-expanded={expandedSection === 'language'}
+          aria-controls="tp-panel-language"
           className="w-full p-4 flex items-center justify-between text-left bg-slate-900/60 hover:bg-slate-900 transition-colors"
         >
           <div className="flex items-center gap-3">
@@ -163,7 +210,7 @@ export default function TrustPassportCard({ data }: TrustPassportProps) {
           {expandedSection === 'language' ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
         </button>
         {expandedSection === 'language' && language_analysis && (
-          <div className="p-5 bg-slate-950/50 space-y-3 text-sm text-slate-300 border-t border-slate-800">
+          <div id="tp-panel-language" className="p-5 bg-slate-950/50 space-y-3 text-sm text-slate-300 border-t border-slate-800">
             <div className="flex items-center justify-between text-xs mb-1">
               <span>Sensationalism Index</span>
               <span className="text-rose-400 font-semibold">{language_analysis.sensationalism_score}/100 (High)</span>

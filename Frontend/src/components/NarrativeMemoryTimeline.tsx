@@ -46,9 +46,16 @@ export default function NarrativeMemoryTimeline({ data }: NarrativeProps) {
         </div>
       </div>
 
-      {/* Visual Timeline Stepper */}
-      <div className="relative pl-6 space-y-8 before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-sky-500 before:via-amber-500 before:to-teal-500">
-        {timeline?.map((event: any, idx: number) => {
+      {/* Empty timeline state fallback */}
+      {(!timeline || timeline.length === 0) ? (
+        <div className="glass-card p-6 rounded-2xl border border-slate-800 text-center space-y-2">
+          <p className="text-sm font-semibold text-slate-300">No historical claim timeline mutation recorded for this input.</p>
+          <p className="text-xs text-slate-400">Claims with tracked viral evolution history will display their step-by-step timeline here.</p>
+        </div>
+      ) : (
+        /* Visual Timeline Stepper */
+        <div className="relative pl-6 space-y-8 before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-sky-500 before:via-amber-500 before:to-teal-500">
+          {timeline.map((event: any, idx: number) => {
           const isActive = activeStep === idx;
           return (
             <motion.div
@@ -96,6 +103,7 @@ export default function NarrativeMemoryTimeline({ data }: NarrativeProps) {
           );
         })}
       </div>
+      )}
     </div>
   );
 }

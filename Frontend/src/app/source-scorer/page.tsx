@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Globe, Lock, UserCheck, FileWarning, Shield } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+import Spinner from '../../components/Spinner';
+
 interface BreakdownItem {
   category: string;
   score: number;
@@ -19,13 +21,6 @@ interface ScoreResult {
 }
 
 export default function SourceScorer() {
-  const Spinner = () => (
-    <svg className="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-    </svg>
-  );
-
   const isBreakdownItem = (obj: any): obj is BreakdownItem => {
     return (
       obj !== null &&
@@ -77,7 +72,7 @@ export default function SourceScorer() {
     setResult(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/source/score`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/source/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: trimmedUrl }),
@@ -105,15 +100,15 @@ export default function SourceScorer() {
   };
 
   const scoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 50) return 'text-amber-600';
-    return 'text-red-600';
+    if (score >= 80) return 'text-emerald-400';
+    if (score >= 50) return 'text-amber-400';
+    return 'text-rose-400';
   };
 
-  const scoreBg = (score: number) => {
-    if (score >= 80) return 'bg-green-50';
-    if (score >= 50) return 'bg-amber-50';
-    return 'bg-red-50';
+  const scoreBadge = (score: number) => {
+    if (score >= 80) return 'badge-green';
+    if (score >= 50) return 'badge-gold';
+    return 'badge-red';
   };
 
   const breakdownItems = Array.isArray(result?.breakdown) ? result.breakdown : [];
@@ -121,11 +116,11 @@ export default function SourceScorer() {
   const domainName = typeof result?.domain === 'string' && result.domain ? result.domain : 'Unknown domain';
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-main)] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-indigo-900 mb-2">Source Credibility Scorer</h1>
-          <p className="text-gray-500">Enter a domain or article URL to check its credibility using public datasets.</p>
+          <h1 className="text-3xl font-bold text-slate-100 text-editorial mb-2">Source Credibility Scorer</h1>
+          <p className="text-slate-400">Enter a domain or article URL to check its credibility using public datasets.</p>
         </motion.div>
 
         <div className="flex gap-3 mb-8">
@@ -134,12 +129,12 @@ export default function SourceScorer() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="example.com or https://example.com/article"
-            className="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm"
+            className="flex-1 px-4 py-3 rounded-xl glass-card bg-slate-900/80 border border-slate-800 text-slate-100 placeholder-slate-500 focus:border-sky-400 focus:ring-2 focus:ring-sky-400/20 outline-none text-sm"
           />
           <button
             onClick={handleAnalyze}
             disabled={loading}
-            className="px-6 py-3 rounded-xl bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-6 py-3 rounded-xl bg-sky-500 text-slate-950 font-bold hover:bg-sky-400 transition-all flex items-center gap-2 disabled:opacity-50 shadow-md shadow-sky-500/20"
           >
             {loading ? <Spinner /> : <><Shield className="w-5 h-5" /> Score</>}
           </button>
@@ -147,15 +142,17 @@ export default function SourceScorer() {
 
         {result && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className={`p-8 rounded-2xl ${scoreBg(overallScore)} border border-gray-200 text-center`}>
-              <div className={`text-6xl font-bold ${scoreColor(overallScore)} mb-2`}>{overallScore}</div>
-              <div className="text-sm text-gray-500">/ 100 Credibility Score</div>
-              <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 text-sm font-medium text-indigo-900">
-                <Globe className="w-4 h-4" /> {domainName}
+            <div className={`p-8 rounded-2xl glass-card border border-slate-800 text-center`}>
+              <div className={`text-6xl font-bold ${scoreColor(overallScore)} font-mono-code mb-2`}>{overallScore}</div>
+              <div className="text-sm text-slate-400 font-mono-code">/ 100 Credibility Score</div>
+              <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-sm font-medium text-slate-200">
+                <Globe className="w-4 h-4 text-sky-400" /> {domainName}
               </div>
               {(result.bias_rating || result.factuality_rating) && (
-                <div className="mt-2 text-xs text-gray-500">
-                  Bias: {result.bias_rating || 'Unknown'} | Factuality: {result.factuality_rating || 'Unknown'}
+                <div className="mt-3 text-xs text-slate-400 flex justify-center gap-4">
+                  <span>Bias: <strong className="text-slate-200">{result.bias_rating || 'Unknown'}</strong></span>
+                  <span>|</span>
+                  <span>Factuality: <strong className="text-slate-200">{result.factuality_rating || 'Unknown'}</strong></span>
                 </div>
               )}
             </div>
@@ -172,19 +169,19 @@ export default function SourceScorer() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="p-4 rounded-xl bg-white border border-gray-200 shadow-sm"
+                    className="p-4 rounded-xl glass-card border border-slate-800"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        {category.includes('HTTPS') && <Lock className="w-4 h-4 text-gray-400" />}
-                        {category.includes('Author') && <UserCheck className="w-4 h-4 text-gray-400" />}
-                        {category.includes('Corrections') && <FileWarning className="w-4 h-4 text-gray-400" />}
-                        {category.includes('Known') && <Globe className="w-4 h-4 text-gray-400" />}
-                        <span className="font-medium text-sm text-indigo-900">{category}</span>
+                        {category.includes('HTTPS') && <Lock className="w-4 h-4 text-slate-400" />}
+                        {category.includes('Author') && <UserCheck className="w-4 h-4 text-slate-400" />}
+                        {category.includes('Corrections') && <FileWarning className="w-4 h-4 text-slate-400" />}
+                        {category.includes('Known') && <Globe className="w-4 h-4 text-slate-400" />}
+                        <span className="font-semibold text-sm text-slate-200">{category}</span>
                       </div>
-                      <span className={`text-sm font-bold ${scoreColor(score)}`}>+{score}</span>
+                      <span className={`text-sm font-bold font-mono-code ${scoreColor(score)}`}>+{score}</span>
                     </div>
-                    <p className="text-xs text-gray-500">{explanation}</p>
+                    <p className="text-xs text-slate-400">{explanation}</p>
                   </motion.div>
                 );
               })}

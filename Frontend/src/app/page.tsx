@@ -5,6 +5,7 @@ import { ShieldCheck, Compass, Clock, Brain, ArrowRight, Play, Sparkles, CheckCi
 import dynamic from 'next/dynamic';
 import { useI18n } from '@/lib/i18n';
 
+import AthenaLogo from '@/components/AthenaLogo';
 const Scene3D = dynamic(() => import('@/components/Scene3D'), { ssr: false });
 
 export default function Home() {
@@ -42,18 +43,19 @@ export default function Home() {
   ];
 
   return (
-    <div className="relative overflow-hidden bg-[#0B0F19] text-[#F8FAFC]">
+    <div className="relative overflow-hidden bg-[var(--color-bg-primary)] text-[var(--color-text-main)]">
       <Scene3D />
 
       <div className="relative z-10 min-h-screen">
         {/* Hero Section */}
         <section className="min-h-[85vh] flex items-center justify-center px-4 py-20">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div className="max-w-4xl mx-auto text-center space-y-8 flex flex-col items-center">
+            <AthenaLogo size="lg" className="mb-2" />
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="space-y-6"
+              className="space-y-6 flex flex-col items-center"
             >
               {/* UNESCO Hackathon Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full badge-cyan text-xs font-semibold uppercase tracking-wider shadow-lg shadow-sky-500/10">
@@ -139,7 +141,8 @@ export default function Home() {
 
         {/* Pitch Philosophy Footer Callout */}
         <section className="py-20 px-4 border-t border-slate-800/80">
-          <div className="max-w-3xl mx-auto text-center space-y-6 glass-card p-10 rounded-3xl border border-sky-500/20 bg-gradient-to-br from-slate-900 to-sky-950/30">
+          <div className="max-w-3xl mx-auto text-center space-y-6 glass-card p-10 rounded-3xl border border-sky-500/20 bg-gradient-to-br from-slate-900 to-sky-950/30 flex flex-col items-center">
+            <AthenaLogo size="lg" className="mb-2" />
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 text-editorial">
               "We never tell you what to believe. We teach you how to evaluate."
             </h2>

@@ -5,6 +5,7 @@ import { Shield, Menu, X, LogOut, User, Sun, Moon } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import AthenaLogo from '@/components/AthenaLogo';
 import { useI18n } from '@/lib/i18n';
 import { useTheme } from '@/lib/theme';
 
@@ -44,26 +45,8 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-teal-400 p-0.5 shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
-              <div
-                className="w-full h-full rounded-[10px] flex items-center justify-center"
-                style={{ background: 'var(--color-bg-primary)' }}
-              >
-                <Shield className="w-5 h-5 text-sky-400" />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span
-                className="text-lg font-bold tracking-wide font-mono-code flex items-center gap-1.5"
-                style={{ color: 'var(--color-text-main)' }}
-              >
-                ATHENA
-                <span className="text-[10px] px-1.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 font-normal">
-                  UNESCO 2026
-                </span>
-              </span>
-            </div>
+          <Link href="/">
+            <AthenaLogo size="md" />
           </Link>
 
           {/* Desktop Links */}
