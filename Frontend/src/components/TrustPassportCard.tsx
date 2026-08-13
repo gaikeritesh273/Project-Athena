@@ -16,23 +16,25 @@ interface TrustPassportProps {
 function EvidenceItem({
   item,
   type,
+  index = 0,
 }: {
   item: any;
   type: 'supporting' | 'conflicting' | 'unverified';
+  index?: number;
 }) {
   const styles = {
     supporting: {
-      container: 'border-teal-500/20 bg-teal-950/10',
+      container: 'border-teal-500/20 bg-teal-950/10 hover:border-teal-500/40',
       icon: <CheckCircle className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />,
       verdictColor: 'text-teal-300',
     },
     conflicting: {
-      container: 'border-rose-500/20 bg-rose-950/10',
+      container: 'border-rose-500/20 bg-rose-950/10 hover:border-rose-500/40',
       icon: <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />,
       verdictColor: 'text-rose-300',
     },
     unverified: {
-      container: 'border-amber-500/20 bg-amber-950/10',
+      container: 'border-amber-500/20 bg-amber-950/10 hover:border-amber-500/40',
       icon: <MinusCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />,
       verdictColor: 'text-amber-300',
     },
@@ -41,7 +43,13 @@ function EvidenceItem({
   const style = styles[type];
 
   return (
-    <div className={`p-3.5 rounded-lg border ${style.container} space-y-1.5`}>
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.08, duration: 0.25 }}
+      whileHover={{ scale: 1.015 }}
+      className={`p-3.5 rounded-lg border ${style.container} space-y-1.5 transition-colors cursor-default`}
+    >
       <div className="flex items-start gap-2">
         {style.icon}
         <div className="space-y-0.5 min-w-0">
@@ -52,13 +60,12 @@ function EvidenceItem({
         </div>
       </div>
       <p className={`text-xs leading-relaxed ${style.verdictColor} pl-6`}>{item.verdict}</p>
-      {/* Never render fake URLs — demo sources labeled accordingly */}
       {item.url && (
         <p className="text-[10px] text-slate-500 pl-6 italic">
           Curated demonstration source reference
         </p>
       )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -296,7 +303,7 @@ export default function TrustPassportCard({ data, isDemo = false }: TrustPasspor
                   <h5 className="text-xs font-semibold text-teal-400 uppercase tracking-wider">Supporting Sources</h5>
                   <div className="space-y-2">
                     {evidence.supporting_items.map((item: any, idx: number) => (
-                      <EvidenceItem key={idx} item={item} type="supporting" />
+                      <EvidenceItem key={idx} item={item} type="supporting" index={idx} />
                     ))}
                   </div>
                 </div>
@@ -310,7 +317,7 @@ export default function TrustPassportCard({ data, isDemo = false }: TrustPasspor
                   </h5>
                   <div className="space-y-2">
                     {evidence.conflicting_items.map((item: any, idx: number) => (
-                      <EvidenceItem key={idx} item={item} type="conflicting" />
+                      <EvidenceItem key={idx} item={item} type="conflicting" index={idx} />
                     ))}
                   </div>
                 </div>
@@ -322,7 +329,7 @@ export default function TrustPassportCard({ data, isDemo = false }: TrustPasspor
                   <h5 className="text-xs font-semibold text-amber-400 uppercase tracking-wider">Unverified Signals</h5>
                   <div className="space-y-2">
                     {evidence.unverified_items.map((item: any, idx: number) => (
-                      <EvidenceItem key={idx} item={item} type="unverified" />
+                      <EvidenceItem key={idx} item={item} type="unverified" index={idx} />
                     ))}
                   </div>
                 </div>
@@ -334,7 +341,7 @@ export default function TrustPassportCard({ data, isDemo = false }: TrustPasspor
                   <h5 className="text-xs font-semibold text-rose-400 uppercase tracking-wider">Conflicting Sources</h5>
                   <div className="space-y-2">
                     {evidence.conflicting_items.map((item: any, idx: number) => (
-                      <EvidenceItem key={idx} item={item} type="conflicting" />
+                      <EvidenceItem key={idx} item={item} type="conflicting" index={idx} />
                     ))}
                   </div>
                 </div>

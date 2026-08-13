@@ -533,16 +533,20 @@ function InvestigationWorkspaceInner() {
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             {/* Demo Scenario Trigger */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02 }}
               onClick={() => handleRunInvestigation(true)}
               className="px-5 py-2.5 rounded-xl bg-slate-900 border border-amber-500/30 hover:border-amber-500/60 text-amber-300 text-xs font-semibold transition-all flex items-center gap-2 group"
             >
               <Play className="w-3.5 h-3.5 text-amber-400 fill-amber-400 group-hover:scale-110 transition-transform" />
               Load Demonstration Scenario
-            </button>
+            </motion.button>
 
             {/* Primary Investigate Action */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: loading ? 1 : 1.02 }}
               onClick={() => handleRunInvestigation(false)}
               disabled={loading}
               className="w-full sm:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-400 hover:to-teal-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 disabled:opacity-50"
@@ -556,7 +560,7 @@ function InvestigationWorkspaceInner() {
                   <Search className="w-4 h-4" /> Investigate
                 </>
               )}
-            </button>
+            </motion.button>
           </div>
 
           {/* Loading State — readable speed for recording */}
@@ -577,12 +581,32 @@ function InvestigationWorkspaceInner() {
                   transition={{ duration: 0.6, ease: 'easeOut' }}
                 />
               </div>
-              <div className="flex justify-between text-[10px] font-mono-code text-slate-600">
-                {steps.map((s, i) => (
-                  <span key={i} className={i <= stepIndex ? 'text-sky-600' : ''}>
-                    {i + 1}
-                  </span>
-                ))}
+              <div className="flex justify-between items-center text-[10px] font-mono-code pt-1">
+                {steps.map((s, i) => {
+                  const isDone = i < stepIndex;
+                  const isCurrent = i === stepIndex;
+                  return (
+                    <div key={i} className="flex items-center gap-1">
+                      {isDone ? (
+                        <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-4 h-4 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold text-[9px]">
+                          ✓
+                        </motion.span>
+                      ) : isCurrent ? (
+                        <motion.span
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
+                          transition={{ repeat: Infinity, duration: 1 }}
+                          className="w-4 h-4 rounded-full bg-sky-500/30 text-sky-300 border border-sky-400 flex items-center justify-center font-bold text-[9px]"
+                        >
+                          {i + 1}
+                        </motion.span>
+                      ) : (
+                        <span className="w-4 h-4 rounded-full bg-slate-900 text-slate-600 flex items-center justify-center text-[9px]">
+                          {i + 1}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </motion.div>
           )}
@@ -612,10 +636,10 @@ function InvestigationWorkspaceInner() {
                 {activeTab === 'passport' && (
                   <motion.div
                     key="passport"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.18, ease: 'easeInOut' }}
                     role="tabpanel"
                     id="panel-passport"
                     aria-labelledby="tab-passport"
@@ -626,10 +650,10 @@ function InvestigationWorkspaceInner() {
                 {activeTab === 'perspectives' && (
                   <motion.div
                     key="perspectives"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.18, ease: 'easeInOut' }}
                     role="tabpanel"
                     id="panel-perspectives"
                     aria-labelledby="tab-perspectives"
@@ -640,10 +664,10 @@ function InvestigationWorkspaceInner() {
                 {activeTab === 'narrative' && (
                   <motion.div
                     key="narrative"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.18, ease: 'easeInOut' }}
                     role="tabpanel"
                     id="panel-narrative"
                     aria-labelledby="tab-narrative"
@@ -654,10 +678,10 @@ function InvestigationWorkspaceInner() {
                 {activeTab === 'tutor' && (
                   <motion.div
                     key="tutor"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.18, ease: 'easeInOut' }}
                     role="tabpanel"
                     id="panel-tutor"
                     aria-labelledby="tab-tutor"
@@ -672,10 +696,10 @@ function InvestigationWorkspaceInner() {
                 {activeTab === 'profile' && (
                   <motion.div
                     key="profile"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.18, ease: 'easeInOut' }}
                     role="tabpanel"
                     id="panel-profile"
                     aria-labelledby="tab-profile"

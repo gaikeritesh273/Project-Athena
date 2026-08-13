@@ -127,6 +127,7 @@ export default function NarrativeMemoryTimeline({ data, isDemo = false }: Narrat
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1, duration: 0.35 }}
+                  whileHover={{ scale: 1.015 }}
                 >
                   <div className={`p-5 rounded-xl border space-y-3 ${config.borderColor} ${config.bgColor}`}>
                     {/* Header Row */}

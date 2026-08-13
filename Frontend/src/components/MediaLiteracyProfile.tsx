@@ -154,26 +154,33 @@ export default function MediaLiteracyProfile({
         {hasBadges ? (
           <div className="flex flex-wrap gap-3">
             {hasInvestigated && (
-              <div className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-300 flex items-center gap-2">
+              <motion.div
+                whileHover={{ y: -1 }}
+                className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-300 flex items-center gap-2 cursor-default"
+              >
                 <Sparkles className="w-4 h-4 text-sky-400" />
                 First Investigation
-              </div>
+              </motion.div>
             )}
             {completedQuiz && (
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="px-3.5 py-2 rounded-xl bg-teal-950/30 border border-teal-500/30 text-xs font-semibold text-teal-300 flex items-center gap-2"
+                whileHover={{ y: -1 }}
+                className="px-3.5 py-2 rounded-xl bg-teal-950/30 border border-teal-500/30 text-xs font-semibold text-teal-300 flex items-center gap-2 cursor-default"
               >
                 <BookOpen className="w-4 h-4 text-teal-400" />
                 Critical Thinking Pioneer
               </motion.div>
             )}
             {hasInvestigated && (
-              <div className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-purple-300 flex items-center gap-2">
+              <motion.div
+                whileHover={{ y: -1 }}
+                className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-purple-300 flex items-center gap-2 cursor-default"
+              >
                 <Award className="w-4 h-4 text-purple-400" />
                 UNESCO MIL Investigator
-              </div>
+              </motion.div>
             )}
           </div>
         ) : (

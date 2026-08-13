@@ -90,20 +90,24 @@ export default function Home() {
 
               {/* Primary Actions */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-                <Link
-                  href="/investigate"
-                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-400 hover:to-teal-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-sky-500/25 flex items-center justify-center gap-2 group"
-                >
-                  Start an Investigation <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <motion.div whileTap={{ scale: 0.97 }} whileHover={{ scale: 1.02 }}>
+                  <Link
+                    href="/investigate"
+                    className="px-8 py-4 rounded-xl bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-400 hover:to-teal-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-sky-500/25 flex items-center justify-center gap-2 group"
+                  >
+                    Start an Investigation <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </motion.div>
 
-                <Link
-                  href="/investigate?demo=true"
-                  className="px-8 py-4 rounded-xl glass-card hover:bg-slate-900 text-amber-300 border-amber-500/30 hover:border-amber-500/60 text-sm font-bold transition-all flex items-center justify-center gap-2"
-                >
-                  <Play className="w-4 h-4 text-amber-400 fill-amber-400" />
-                  Try the Demo
-                </Link>
+                <motion.div whileTap={{ scale: 0.97 }} whileHover={{ scale: 1.02 }}>
+                  <Link
+                    href="/investigate?demo=true"
+                    className="px-8 py-4 rounded-xl glass-card hover:bg-slate-900 text-amber-300 border-amber-500/30 hover:border-amber-500/60 text-sm font-bold transition-all flex items-center justify-center gap-2"
+                  >
+                    <Play className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    Try the Demo
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           </div>
@@ -147,7 +151,8 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className={`p-6 rounded-2xl glass-card border ${feature.borderColor} hover:border-sky-500/30 transition-all space-y-4 group`}
+                  whileHover={{ scale: 1.015 }}
+                  className={`p-6 rounded-2xl glass-card border ${feature.borderColor} hover:border-sky-500/30 transition-all space-y-4 group cursor-default`}
                 >
                   <div className="flex items-center gap-2">
                     <div className={`p-3 rounded-xl bg-slate-900/80 w-fit ${feature.color} border border-slate-800 group-hover:scale-110 transition-transform`}>

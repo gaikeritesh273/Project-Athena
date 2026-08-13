@@ -97,7 +97,8 @@ export default function PerspectiveExplorer({ data, isDemo = false }: Perspectiv
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.07 }}
-              className={`p-5 rounded-xl border space-y-3 ${tier.bg}`}
+              whileHover={{ scale: 1.015 }}
+              className={`p-5 rounded-xl border space-y-3 ${tier.bg} transition-colors cursor-default`}
             >
               {/* Category + Credibility Row */}
               <div className="flex flex-wrap items-center justify-between gap-2">
