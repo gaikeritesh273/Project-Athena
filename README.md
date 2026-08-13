@@ -3,7 +3,7 @@
 > **UNESCO Youth Hackathon 2026 Entry**  
 > "Play Your Part: Youth Designing the Future of Media and Information Literacy."
 
-**Tagline:** *"Don't just know what to believe. Learn how to evaluate."*
+**Tagline:** _"Don't just know what to believe. Learn how to evaluate."_
 
 ---
 
@@ -12,6 +12,7 @@
 The internet is flooded with viral misinformation, emotionally manipulative headlines, and out-of-context claims. Most people — especially young people — share content before verifying it, not because they are careless, but because they lack the practical skills to evaluate information critically.
 
 Existing tools either:
+
 - Give binary "TRUE / FALSE" verdicts (black-box fact-checking)
 - Rely entirely on opaque AI models
 - Treat users as passive consumers rather than active critical thinkers
@@ -29,9 +30,10 @@ ATHENA is an **AI-assisted Media & Information Literacy platform** that helps us
 5. **Track** personal growth through a Media Literacy Profile
 
 ATHENA never says "this is definitely true" or "this is definitely fake." Instead, it uses transparent, epistemologically grounded language:
-- *"Evidence is currently insufficient to support this claim."*
-- *"Conflicting credible evidence exists — requires verification."*
-- *"Context is missing — the original source has not been established."*
+
+- _"Evidence is currently insufficient to support this claim."_
+- _"Conflicting credible evidence exists — requires verification."_
+- _"Context is missing — the original source has not been established."_
 
 ---
 
@@ -80,15 +82,15 @@ Upstash Redis (Caching, Rate Limiting)
 
 ## Key Features
 
-| Feature | Description |
-|---|---|
-| **Trust Passport** | Multi-section report: Claim, Source, Evidence Matrix, Context, Language/Emotional Framing, AI Indicators, Assessment, Uncertainty, Suggested Actions |
-| **Perspective Explorer** | Interactive comparison of Scientific, Fact-Check, International Media, and Community perspectives on the same claim |
-| **Narrative Memory** | Visual clickable timeline tracing how a claim evolves from original publication to viral amplification to fact-check correction |
-| **AI Media Literacy Tutor** | Educational explanation of WHY content may be misleading, followed by a 1-3 question interactive challenge |
-| **Media Literacy Profile** | Skill bar tracking across 5 MIL dimensions (Source Evaluation, Context Checking, Evidence Evaluation, Emotional Framing Awareness, Media Forensics) |
-| **Demo Mode** | One-click 60-90 second pitch demo with deterministic results, independent of external APIs |
-| **Multilingual Foundation** | English + Hindi architecture, extensible to more UNESCO-priority languages |
+| Feature                     | Description                                                                                                                                          |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Trust Passport**          | Multi-section report: Claim, Source, Evidence Matrix, Context, Language/Emotional Framing, AI Indicators, Assessment, Uncertainty, Suggested Actions |
+| **Perspective Explorer**    | Interactive comparison of Scientific, Fact-Check, International Media, and Community perspectives on the same claim                                  |
+| **Narrative Memory**        | Visual clickable timeline tracing how a claim evolves from original publication to viral amplification to fact-check correction                      |
+| **AI Media Literacy Tutor** | Educational explanation of WHY content may be misleading, followed by a 1-3 question interactive challenge                                           |
+| **Media Literacy Profile**  | Skill bar tracking across 5 MIL dimensions (Source Evaluation, Context Checking, Evidence Evaluation, Emotional Framing Awareness, Media Forensics)  |
+| **Demo Mode**               | One-click 60-90 second pitch demo with deterministic results, independent of external APIs                                                           |
+| **Multilingual Foundation** | English + Hindi architecture, extensible to more UNESCO-priority languages                                                                           |
 
 ---
 
@@ -112,16 +114,16 @@ def get_ai_provider() -> BaseAIProvider:
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | Next.js 14, TypeScript, Tailwind CSS, Framer Motion, Lucide Icons |
-| Backend | FastAPI 2.0, Python 3.13, Pydantic v2 |
-| Database | Supabase (PostgreSQL + Auth) |
-| Cache | Upstash Redis (REST API) |
-| Fonts | Plus Jakarta Sans, Playfair Display, JetBrains Mono |
-| APIs | NewsAPI, GNews, BBC/Reuters/AP/NPR RSS, Reddit API |
-| AI | Gemini / OpenAI (with deterministic fallback) |
-| Deployment | Vercel (Frontend) + Render (Backend) |
+| Layer      | Technology                                                        |
+| ---------- | ----------------------------------------------------------------- |
+| Frontend   | Next.js 14, TypeScript, Tailwind CSS, Framer Motion, Lucide Icons |
+| Backend    | FastAPI 2.0, Python 3.13, Pydantic v2                             |
+| Database   | Supabase (PostgreSQL + Auth)                                      |
+| Cache      | Upstash Redis (REST API)                                          |
+| Fonts      | Plus Jakarta Sans, Playfair Display, JetBrains Mono               |
+| APIs       | NewsAPI, GNews, BBC/Reuters/AP/NPR RSS, Reddit API                |
+| AI         | Gemini / OpenAI (with deterministic fallback)                     |
+| Deployment | Vercel (Frontend) + Render (Backend)                              |
 
 ---
 
@@ -227,4 +229,6 @@ Open `http://localhost:3000`
 
 ---
 
-*Built for UNESCO Youth Hackathon 2026 — "Play Your Part: Youth Designing the Future of Media and Information Literacy."*
+_Built for UNESCO Youth Hackathon 2026 — "Play Your Part: Youth Designing the Future of Media and Information Literacy."_
+
+Making the update for the repo combination
