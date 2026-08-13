@@ -26,13 +26,10 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { href: '/investigate', label: t('navInvestigate') },
-    { href: '/dashboard', label: t('navDashboard') },
-    { href: '/claim-checker', label: t('navClaimChecker') },
-    { href: '/bias-detector', label: t('navBiasDetector') },
-    { href: '/source-scorer', label: t('navSourceScorer') },
-    { href: '/trainer', label: t('navTrainer') },
+    { href: '/investigate', label: 'Investigate' },
+    { href: '/trainer', label: 'Learn & Train' },
   ];
+
 
   const isDark = theme === 'dark';
 
@@ -51,17 +48,22 @@ export default function Navbar() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-5">
-            {navLinks.map((link) => (
+            {navLinks.map((link, idx) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-xs font-semibold transition-colors hover:text-sky-400"
-                style={{ color: 'var(--color-text-muted)' }}
+                className={`text-xs font-semibold transition-colors ${
+                  idx === 0
+                    ? 'text-sky-400 hover:text-sky-300'
+                    : 'hover:text-sky-400'
+                }`}
+                style={idx !== 0 ? { color: 'var(--color-text-muted)' } : {}}
               >
                 {link.label}
               </Link>
             ))}
           </div>
+
 
           {/* Right Actions */}
           <div className="hidden md:flex items-center gap-3">

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { formatCaseDate } from "@/lib/utils";
 import AthenaLogo from "@/components/AthenaLogo";
+import { motion } from "framer-motion";
 
 const RECENT = [
   { id: "C-0104", tool: "Claim Checker", subject: "Vaccine mandate claim", verdict: "Disputed", date: new Date("2026-08-09") },
@@ -67,9 +68,12 @@ export default function DashboardPage() {
                 <p className="mt-1 font-medium text-slate-100">{r.subject}</p>
               </div>
               <div className="flex items-center gap-4">
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${VERDICT_BADGE[r.verdict] || 'badge-cyan'}`}>
+                <motion.span
+                  whileHover={{ y: -1 }}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold cursor-default ${VERDICT_BADGE[r.verdict] || 'badge-cyan'}`}
+                >
                   {r.verdict}
-                </span>
+                </motion.span>
                 <span className="font-mono-code text-xs text-slate-400">{formatCaseDate(r.date)}</span>
               </div>
             </div>
