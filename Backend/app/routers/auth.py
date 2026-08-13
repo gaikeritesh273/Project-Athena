@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from typing import Optional
 from app.utils.supabase_client import get_supabase, get_supabase_admin
 from app.models.schemas import SignupRequest
@@ -7,7 +7,7 @@ from app.models.schemas import SignupRequest
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 class RefreshRequest(BaseModel):
