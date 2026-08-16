@@ -11,6 +11,7 @@
 
   <p align="center">
     <a href="https://athena-eta-flame.vercel.app/"><img src="https://img.shields.io/badge/Live_Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo"></a>
+    <a href="https://drive.google.com/file/d/1XVQtJ0OKH3B66EuOJ7oiXDxQFfyaR8Zc/view?usp=drive_link"><img src="https://img.shields.io/badge/Demo_Video-Google_Drive-FF8800?style=for-the-badge&logo=googledrive&logoColor=white" alt="Demo Video"></a>
     <a href="https://athena-backend-wrfq.onrender.com/"><img src="https://img.shields.io/badge/Backend_API-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black" alt="Backend API"></a>
     <a href="https://athena-backend-wrfq.onrender.com/docs"><img src="https://img.shields.io/badge/API_Docs-Swagger-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="Swagger Docs"></a>
     <a href="https://github.com/himanshu-jadhav108/Project-Athena"><img src="https://img.shields.io/badge/Test_Suite-13%2F13_Passing-success?style=for-the-badge&logo=pytest&logoColor=white" alt="Test Suite"></a>
@@ -18,6 +19,7 @@
   </p>
 
   <p align="center">
+    <a href="https://drive.google.com/file/d/1XVQtJ0OKH3B66EuOJ7oiXDxQFfyaR8Zc/view?usp=drive_link" target="_blank"><b>🎥 Demo Video</b></a> •
     <a href="https://athena-eta-flame.vercel.app/" target="_blank"><b>🌐 Live Website</b></a> •
     <a href="#-key-project-links"><b>🔗 Quick Links</b></a> •
     <a href="#-key-feature-matrix"><b>🚀 Key Features</b></a> •
@@ -34,11 +36,28 @@
 
 ---
 
+## 🎥 Platform Demonstration & Video Walkthrough
+
+<div align="center">
+  <p>
+    <a href="https://drive.google.com/file/d/1XVQtJ0OKH3B66EuOJ7oiXDxQFfyaR8Zc/view?usp=drive_link" target="_blank">
+      <img src="https://img.shields.io/badge/Watch_Full_Demo_Video-Google_Drive-FF8800?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch Demo Video on Google Drive" />
+    </a>
+  </p>
+  <p>
+    🎬 <b><a href="https://drive.google.com/file/d/1XVQtJ0OKH3B66EuOJ7oiXDxQFfyaR8Zc/view?usp=drive_link" target="_blank">Click here to watch the full ATHENA Platform Demonstration Video on Google Drive ↗</a></b>
+  </p>
+  <p><i>Figure 1: ATHENA Live Workspace Walkthrough — 360° Multi-Dimensional Trust Passport, 4-Quadrant Perspective Explorer, Temporal Narrative Memory, and Gamified UNESCO MIL Trainer.</i></p>
+</div>
+
+---
+
 ## 🌐 Key Project Links
 
 | Artifact | Access Link / Status | Description |
 | :--- | :--- | :--- |
 | 🌐 **Live Web Application** | [https://athena-eta-flame.vercel.app/](https://athena-eta-flame.vercel.app/) | Production Next.js 14 Client deployed on Vercel Edge Network |
+| 🎥 **Demo Video** | [Watch Demo Video (Google Drive)](https://drive.google.com/file/d/1XVQtJ0OKH3B66EuOJ7oiXDxQFfyaR8Zc/view?usp=drive_link) | End-to-end walkthrough of 360° investigation workspace & AI tutor |
 | ⚡ **Backend REST API** | [https://athena-backend-wrfq.onrender.com/](https://athena-backend-wrfq.onrender.com/) | FastAPI Asynchronous Engine hosted on Render Cloud |
 | 📜 **Interactive Swagger Docs** | [https://athena-backend-wrfq.onrender.com/docs](https://athena-backend-wrfq.onrender.com/docs) | OpenAPI 3.0 Interactive API Explorer & Schema Specs |
 | 📚 **ReDoc API Specifications** | [https://athena-backend-wrfq.onrender.com/redoc](https://athena-backend-wrfq.onrender.com/redoc) | Human-readable REST API documentation |
